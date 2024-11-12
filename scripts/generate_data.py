@@ -4,9 +4,12 @@ from datetime import datetime
 from utils.file_utils import ensure_directory_exists, write_json_to_file
 from utils.data_utils import generate_random_flight
 from constants.config import NUM_FILES, CITIES, FLIGHT_DATA_DIR
+from utils.logger import measure_it, log_it
 from utils.logging_config import project_logger
 
 
+@measure_it
+@log_it
 def generate_flight_data_for_file(file_path, num_records):
     """Generates flight data and writes it to the specified file."""
     try:
@@ -25,6 +28,8 @@ def generate_filename(origin_city):
     return os.path.join(FLIGHT_DATA_DIR, f"{date_prefix}-{origin_city}-flights.json")
 
 
+@measure_it
+@log_it
 def generate_flight_data():
     """Generates flight data across multiple files and returns the total record count."""
     ensure_directory_exists(FLIGHT_DATA_DIR)
