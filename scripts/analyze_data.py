@@ -1,10 +1,13 @@
 import os
+
 import pandas as pd
-from utils.file_utils import read_json_from_file
+
 from constants.config import FLIGHT_DATA_DIR
-from utils.logging_config import project_logger
 from utils.custom_exceptions import FileHandlingError, DataProcessingError
+from utils.file_utils import read_json_from_file
 from utils.logger import measure_it, log_it
+from utils.logging_config import project_logger
+
 
 @measure_it
 @log_it
@@ -65,6 +68,7 @@ def analyze_top_destinations(df):
     p95_duration = top_dest_data.groupby('destination_city')['flight_duration_secs'].quantile(0.95)
 
     return avg_duration, p95_duration
+
 
 @measure_it
 @log_it

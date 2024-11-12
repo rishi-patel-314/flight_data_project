@@ -1,6 +1,8 @@
 import time
 from functools import wraps
+
 from utils.logging_config import project_logger  # assuming you have a logger configured
+
 
 def measure_it(func):
     @wraps(func)
@@ -15,6 +17,7 @@ def measure_it(func):
         return result
 
     return wrapper
+
 
 def log_it(func):
     @wraps(func)

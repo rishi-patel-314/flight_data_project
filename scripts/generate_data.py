@@ -1,9 +1,10 @@
-import random
 import os
+import random
 from datetime import datetime
-from utils.file_utils import ensure_directory_exists, write_json_to_file
-from utils.data_utils import generate_random_flight
+
 from constants.config import NUM_FILES, CITIES, FLIGHT_DATA_DIR
+from utils.data_utils import generate_random_flight
+from utils.file_utils import ensure_directory_exists, write_json_to_file
 from utils.logger import measure_it, log_it
 from utils.logging_config import project_logger
 
