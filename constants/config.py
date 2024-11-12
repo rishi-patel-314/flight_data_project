@@ -2,7 +2,9 @@
 
 NUM_FILES = 5000
 CITIES = [f"City_{i}" for i in range(100, 200)]
-FLIGHT_DATA_DIR = "/Users/rishikanaujia/PycharmProjects/flight_data_project/tmp/flights"
+
+# To run in local change (FLIGHT_DATA_DIR) path from connect root to absolute path
+FLIGHT_DATA_DIR = "tmp/flights"
 MIN_FLIGHT_DURATION = 30 * 60  # 30 minutes in seconds
 MAX_FLIGHT_DURATION = 5 * 60 * 60  # 5 hours in seconds
 MIN_PASSENGERS = 10
