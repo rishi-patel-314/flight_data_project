@@ -4,7 +4,10 @@ from utils.file_utils import read_json_from_file
 from constants.config import FLIGHT_DATA_DIR
 from utils.logging_config import project_logger
 from utils.custom_exceptions import FileHandlingError, DataProcessingError
+from utils.logger import measure_it, log_it
 
+@measure_it
+@log_it
 def collect_flight_data(directory):
     """Collects flight data from JSON files in the specified directory."""
     dirty_records = 0
@@ -25,6 +28,7 @@ def collect_flight_data(directory):
 
     return all_flight_data, dirty_records
 
+
 def filter_dirty_records(data):
     """Filters dirty records (containing None values) from the data."""
     clean_data = []
@@ -38,15 +42,20 @@ def filter_dirty_records(data):
 
     return clean_data, dirty_count
 
+
+@measure_it
+@log_it
 def process_flight_data(data):
     """Processes flight data using a DataFrame and performs analysis."""
     df = pd.DataFrame(data)
     df['flight_duration_secs'] = pd.to_numeric(df['flight_duration_secs'], errors='coerce')
     df['num_passengers'] = pd.to_numeric(df['num_passengers'], errors='coerce')
     df = df.dropna()
-
     return df
 
+
+@log_it
+@measure_it
 def analyze_top_destinations(df):
     """Analyzes top 25 destination cities based on flight duration."""
     top_dest_cities = df['destination_city'].value_counts().head(25).index
@@ -57,6 +66,8 @@ def analyze_top_destinations(df):
 
     return avg_duration, p95_duration
 
+@measure_it
+@log_it
 def find_max_passenger_cities(df):
     """Finds cities with the maximum passengers arrived and left."""
     passengers_arrived = df.groupby('destination_city')['num_passengers'].sum()
@@ -66,6 +77,7 @@ def find_max_passenger_cities(df):
     max_left_city = passengers_left.idxmax()
 
     return max_arrived_city, max_left_city
+
 
 def main():
     project_logger.info("Data analysis started.")
@@ -95,6 +107,7 @@ def main():
         project_logger.error(f"Unexpected error: {str(e)}")
     finally:
         project_logger.info("Data analysis process ended.")
+
 
 if __name__ == "__main__":
     main()
